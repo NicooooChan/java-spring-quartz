@@ -8,6 +8,7 @@ import com.quartz.demo.util.BaseReturnCode;
 import com.quartz.demo.common.persist.Page;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronExpression;
+import org.quartz.ObjectAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import java.util.List;
 
 /**
  * 定时器Controller
- * 
+ *
  * @author 海乐乐
  * @version 创建时间： 2017年5月09日 上午10:42:24
  */
@@ -50,7 +51,7 @@ public class ScheduleJobController{
 
 	/**
 	* @desctiption add添加
-	* @author 陈急舟 
+	* @author 陈急舟
 	* @date 2019/9/25 14:36
 	*/
 	@PostMapping(value = "add")
@@ -75,13 +76,13 @@ public class ScheduleJobController{
 			service.add(scheduleEntity);
 			return new BaseReturn("保存成功").toJSONString();
 		} catch (Exception e) {
-			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, "系统错误!").toJSONString();
+			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, e.getMessage()).toJSONString();
 		}
 	}
 
 	/**
 	* @desctiption 暂停任务
-	* @author 陈急舟 
+	* @author 陈急舟
 	* @date 2019/9/25 14:37
 	*/
 	@PostMapping(value = "stopJob")
@@ -100,7 +101,7 @@ public class ScheduleJobController{
 
 	/**
 	* @desctiption 删除任务
-	* @author 陈急舟 
+	* @author 陈急舟
 	* @date 2019/9/25 14:37
 	*/
 	@PostMapping(value = "delete")
@@ -109,8 +110,11 @@ public class ScheduleJobController{
 			return new BaseReturn(BaseReturnCode.PARAMS_ERROR, "参数job_name和job_group不能为空").toJSONString();
 		}
 		try {
-			service.delJob(scheduleEntity.getJob_name(), scheduleEntity.getJob_group());
-			return new BaseReturn("删除成功!").toJSONString();
+			boolean deleteFlag = service.delJob(scheduleEntity.getJob_name(), scheduleEntity.getJob_group());
+			if(deleteFlag)
+				return new BaseReturn("删除成功!").toJSONString();
+			else
+				return new BaseReturn("删除失败!").toJSONString();
 		} catch (Exception e) {
 			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, "操作失败!").toJSONString();
 		}
@@ -118,7 +122,7 @@ public class ScheduleJobController{
 
 	/**
 	* @desctiption 修改表达式
-	* @author 陈急舟 
+	* @author 陈急舟
 	* @date 2019/9/25 14:37
 	*/
 	@PostMapping(value = "update")
@@ -148,7 +152,7 @@ public class ScheduleJobController{
 
 	/**
 	* @desctiption 立即运行一次
-	* @author 陈急舟 
+	* @author 陈急舟
 	* @date 2019/9/25 14:37
 	*/
 	@PostMapping(value = "startNow")
@@ -166,7 +170,7 @@ public class ScheduleJobController{
 
 	/**
 	* @desctiption 恢复
-	* @author 陈急舟 
+	* @author 陈急舟
 	* @date 2019/9/25 14:37
 	*/
 	@PostMapping(value = "resume")
@@ -184,7 +188,7 @@ public class ScheduleJobController{
 
 	/**
 	* @desctiption 获取所有trigger触发器
-	* @author 陈急舟 
+	* @author 陈急舟
 	* @date 2019/9/25 14:38
 	*/
 	@PostMapping(value = "getTriggers")

@@ -1,52 +1,27 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : 本地环境
- Source Server Type    : MySQL
- Source Server Version : 50622
- Source Host           : 127.0.0.1:3306
- Source Schema         : quartz
-
- Target Server Type    : MySQL
- Target Server Version : 50622
- File Encoding         : 65001
-
- Date: 25/09/2019 17:30:54
-*/
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
--- ----------------------------
--- Table structure for soa_qrtz_blob_triggers
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_blob_triggers`;
 CREATE TABLE `soa_qrtz_blob_triggers`  (
   `SCHED_NAME` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `TRIGGER_NAME` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `TRIGGER_GROUP` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `BLOB_DATA` blob NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
--- ----------------------------
--- Table structure for soa_qrtz_calendars
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_calendars`;
 CREATE TABLE `soa_qrtz_calendars`  (
   `SCHED_NAME` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `CALENDAR_NAME` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `CALENDAR` blob NOT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `CALENDAR_NAME`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
--- ----------------------------
--- Table structure for soa_qrtz_cron_triggers
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_cron_triggers`;
 CREATE TABLE `soa_qrtz_cron_triggers`  (
   `SCHED_NAME` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -54,14 +29,10 @@ CREATE TABLE `soa_qrtz_cron_triggers`  (
   `TRIGGER_GROUP` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `CRON_EXPRESSION` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `TIME_ZONE_ID` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
--- ----------------------------
--- Table structure for soa_qrtz_fired_triggers
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_fired_triggers`;
 CREATE TABLE `soa_qrtz_fired_triggers`  (
   `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -77,14 +48,10 @@ CREATE TABLE `soa_qrtz_fired_triggers`  (
   `JOB_GROUP` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `ENTRY_ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
--- ----------------------------
--- Table structure for soa_qrtz_job_details
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_job_details`;
 CREATE TABLE `soa_qrtz_job_details`  (
   `SCHED_NAME` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -97,52 +64,36 @@ CREATE TABLE `soa_qrtz_job_details`  (
   `IS_UPDATE_DATA` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `JOB_DATA` blob NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
--- ----------------------------
--- Table structure for soa_qrtz_locks
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_locks`;
 CREATE TABLE `soa_qrtz_locks`  (
   `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `LOCK_NAME` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `LOCK_NAME`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
--- ----------------------------
--- Table structure for soa_qrtz_paused_trigger_grps
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_paused_trigger_grps`;
 CREATE TABLE `soa_qrtz_paused_trigger_grps`  (
   `SCHED_NAME` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `TRIGGER_GROUP` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
--- ----------------------------
--- Table structure for soa_qrtz_scheduler_state
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_scheduler_state`;
 CREATE TABLE `soa_qrtz_scheduler_state`  (
   `SCHED_NAME` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `INSTANCE_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
   `CHECKIN_INTERVAL` bigint(13) NOT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
--- ----------------------------
--- Table structure for soa_qrtz_simple_triggers
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_simple_triggers`;
 CREATE TABLE `soa_qrtz_simple_triggers`  (
   `SCHED_NAME` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -151,14 +102,10 @@ CREATE TABLE `soa_qrtz_simple_triggers`  (
   `REPEAT_COUNT` bigint(7) NOT NULL,
   `REPEAT_INTERVAL` bigint(12) NOT NULL,
   `TIMES_TRIGGERED` bigint(10) NOT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
--- ----------------------------
--- Table structure for soa_qrtz_simprop_triggers
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_simprop_triggers`;
 CREATE TABLE `soa_qrtz_simprop_triggers`  (
   `SCHED_NAME` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -175,14 +122,10 @@ CREATE TABLE `soa_qrtz_simprop_triggers`  (
   `DEC_PROP_2` decimal(13, 4) NULL DEFAULT NULL,
   `BOOL_PROP_1` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `BOOL_PROP_2` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
--- ----------------------------
--- Table structure for soa_qrtz_triggers
--- ----------------------------
+
 DROP TABLE IF EXISTS `soa_qrtz_triggers`;
 CREATE TABLE `soa_qrtz_triggers`  (
   `SCHED_NAME` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -201,8 +144,6 @@ CREATE TABLE `soa_qrtz_triggers`  (
   `CALENDAR_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `MISFIRE_INSTR` smallint(2) NULL DEFAULT NULL,
   `JOB_DATA` blob NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '猪八戒更新时间',
   PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
   INDEX `SCHED_NAME`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;

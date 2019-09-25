@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public class ScheduleJobService{
 
    /**
    * @desctiption 添加定时任务
-   * @author 陈急舟 
+   * @author 陈急舟
    * @date 2019/9/25 14:29
    */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -49,7 +50,7 @@ public class ScheduleJobService{
 
     /**
     * @desctiption 获取所有JobDetail
-    * @author 陈急舟 
+    * @author 陈急舟
     * @date 2019/9/25 14:29
     */
     public List<JobDetail> getJobs() {
@@ -69,7 +70,7 @@ public class ScheduleJobService{
 
     /**
     * @desctiption 获取所有计划中的任务
-    * @author 陈急舟 
+    * @author 陈急舟
     * @date 2019/9/25 14:29
     */
     public List<ScheduleJob> getAllScheduleJob() {
@@ -119,7 +120,7 @@ public class ScheduleJobService{
 
     /**
     * @desctiption 获取所有运行中的任务
-    * @author 陈急舟 
+    * @author 陈急舟
     * @date 2019/9/25 14:29
     */
     public List<ScheduleJob> getAllRuningScheduleJob() {
@@ -165,7 +166,7 @@ public class ScheduleJobService{
 
     /**
     * @desctiption 获取所有的触发器
-    * @author 陈急舟 
+    * @author 陈急舟
     * @date 2019/9/25 14:29
     */
     public List<ScheduleJob> getTriggersInfo() {
@@ -203,7 +204,7 @@ public class ScheduleJobService{
 
     /**
     * @desctiption 暂停任务
-    * @author 陈急舟 
+    * @author 陈急舟
     * @date 2019/9/25 14:29
     */
     public void stopJob(String name, String group) throws SchedulerException {
@@ -213,7 +214,7 @@ public class ScheduleJobService{
 
     /**
     * @desctiption 恢复任务
-    * @author 陈急舟 
+    * @author 陈急舟
     * @date 2019/9/25 14:30
     */
     public void restartJob(String name, String group) throws SchedulerException {
@@ -223,7 +224,7 @@ public class ScheduleJobService{
 
     /**
     * @desctiption 立马执行一次任务
-    * @author 陈急舟 
+    * @author 陈急舟
     * @date 2019/9/25 14:30
     */
     public void startNowJob(String name, String group) throws SchedulerException {
@@ -233,17 +234,17 @@ public class ScheduleJobService{
 
     /**
     * @desctiption 删除任务
-    * @author 陈急舟 
+    * @author 陈急舟
     * @date 2019/9/25 14:30
     */
-    public void delJob(String name, String group) throws SchedulerException {
+    public boolean delJob(String name, String group) throws SchedulerException {
         JobKey key = new JobKey(name, group);
-        scheduler.deleteJob(key);
+        return scheduler.deleteJob(key);
     }
 
     /**
     * @desctiption 修改触发器时间
-    * @author 陈急舟 
+    * @author 陈急舟
     * @date 2019/9/25 14:30
     */
     public void modifyTrigger(String name, String group, String cron) throws SchedulerException {
@@ -257,7 +258,7 @@ public class ScheduleJobService{
 
     /**
     * @desctiption 暂停调度器
-    * @author 陈急舟 
+    * @author 陈急舟
     * @date 2019/9/25 14:30
     */
     public void stopScheduler() throws SchedulerException {
