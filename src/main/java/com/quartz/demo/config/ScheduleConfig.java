@@ -121,7 +121,7 @@ public class ScheduleConfig {
     public SchedulerFactoryBean getSchedulerFactoryBean() throws IOException {
         SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
         //QuartzScheduler 延时启动，应用启动完10秒后 QuartzScheduler 再启动
-        factoryBean.setStartupDelay(10);
+        //factoryBean.setStartupDelay(5);
         //用于quartz集群,加载quartz数据源配置
         factoryBean.setQuartzProperties(quartzProperties());
         DataSource datasource = SpringContextHolder.getBean("dataSource");

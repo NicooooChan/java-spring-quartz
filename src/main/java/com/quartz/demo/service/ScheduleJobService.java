@@ -12,11 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 定时器quartz Service
- *
- * @author 海乐乐
- * @version 2017-05-09
- */
+* @desctiption 定时器quartz Service
+* @author 陈急舟 
+* @date 2019/9/26 9:00
+*/
 @Service
 public class ScheduleJobService{
 
@@ -247,13 +246,17 @@ public class ScheduleJobService{
     * @author 陈急舟
     * @date 2019/9/25 14:30
     */
-    public void modifyTrigger(String name, String group, String cron) throws SchedulerException {
+    public boolean modifyTrigger(String name, String group, String cron) throws SchedulerException {
         TriggerKey key = TriggerKey.triggerKey(name, group);
         // Trigger trigger = scheduler.getTrigger(key);
 
         CronTrigger newTrigger = (CronTrigger) TriggerBuilder.newTrigger().withIdentity(key)
                 .withSchedule(CronScheduleBuilder.cronSchedule(cron)).build();
-        scheduler.rescheduleJob(key, newTrigger);
+        Date date = scheduler.rescheduleJob(key, newTrigger);
+        if(date == null) {
+            return false;
+        }
+        return true;
     }
 
     /**

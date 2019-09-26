@@ -8,7 +8,6 @@ import com.quartz.demo.util.BaseReturnCode;
 import com.quartz.demo.common.persist.Page;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronExpression;
-import org.quartz.ObjectAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 定时器Controller
- *
- * @author 海乐乐
- * @version 创建时间： 2017年5月09日 上午10:42:24
- */
+* @desctiption 定时器Controller
+* @author 陈急舟 
+* @date 2019/9/26 9:00
+*/
 @RestController
 @RequestMapping(value = "scheduleJob")
 public class ScheduleJobController{
@@ -51,7 +49,7 @@ public class ScheduleJobController{
 
 	/**
 	* @desctiption add添加
-	* @author 陈急舟
+	* @author 陈急舟 
 	* @date 2019/9/25 14:36
 	*/
 	@PostMapping(value = "add")
@@ -82,7 +80,7 @@ public class ScheduleJobController{
 
 	/**
 	* @desctiption 暂停任务
-	* @author 陈急舟
+	* @author 陈急舟 
 	* @date 2019/9/25 14:37
 	*/
 	@PostMapping(value = "stopJob")
@@ -95,13 +93,13 @@ public class ScheduleJobController{
 			service.stopJob(scheduleEntity.getJob_name(), scheduleEntity.getJob_group());
 			return new BaseReturn("暂停成功!").toJSONString();
 		} catch (Exception e) {
-			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, "操作失败!").toJSONString();
+			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, e.getMessage()).toJSONString();
 		}
 	}
 
 	/**
 	* @desctiption 删除任务
-	* @author 陈急舟
+	* @author 陈急舟 
 	* @date 2019/9/25 14:37
 	*/
 	@PostMapping(value = "delete")
@@ -111,18 +109,19 @@ public class ScheduleJobController{
 		}
 		try {
 			boolean deleteFlag = service.delJob(scheduleEntity.getJob_name(), scheduleEntity.getJob_group());
-			if(deleteFlag)
+			if(deleteFlag) {
 				return new BaseReturn("删除成功!").toJSONString();
-			else
-				return new BaseReturn("删除失败!").toJSONString();
+			}else{
+				return new BaseReturn(BaseReturnCode.PARAMS_ERROR,"删除失败").toJSONString();
+			}
 		} catch (Exception e) {
-			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, "操作失败!").toJSONString();
+			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, e.getMessage()).toJSONString();
 		}
 	}
 
 	/**
 	* @desctiption 修改表达式
-	* @author 陈急舟
+	* @author 陈急舟 
 	* @date 2019/9/25 14:37
 	*/
 	@PostMapping(value = "update")
@@ -142,17 +141,22 @@ public class ScheduleJobController{
 			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, "cron表达式有误，不能被解析！").toJSONString();
 		}
 		try {
-			service.modifyTrigger(scheduleEntity.getJob_name(), scheduleEntity.getJob_group(),
+			boolean updateFlag = service.modifyTrigger(scheduleEntity.getJob_name(), scheduleEntity.getJob_group(),
 					scheduleEntity.getCron_expression());
-			return new BaseReturn("操作成功").toJSONString();
+			if(updateFlag){
+				return new BaseReturn("修改成功").toJSONString();
+			} else {
+				return new BaseReturn(BaseReturnCode.PARAMS_ERROR,"修改失败").toJSONString();
+			}
+
 		} catch (Exception e) {
-			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, "操作失败!").toJSONString();
+			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, e.getMessage()).toJSONString();
 		}
 	}
 
 	/**
 	* @desctiption 立即运行一次
-	* @author 陈急舟
+	* @author 陈急舟 
 	* @date 2019/9/25 14:37
 	*/
 	@PostMapping(value = "startNow")
@@ -164,13 +168,13 @@ public class ScheduleJobController{
 			service.startNowJob(scheduleEntity.getJob_name(), scheduleEntity.getJob_group());
 			return new BaseReturn("运行成功").toJSONString();
 		} catch (Exception e) {
-			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, "操作失败!").toJSONString();
+			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, e.getMessage()).toJSONString();
 		}
 	}
 
 	/**
 	* @desctiption 恢复
-	* @author 陈急舟
+	* @author 陈急舟 
 	* @date 2019/9/25 14:37
 	*/
 	@PostMapping(value = "resume")
@@ -182,13 +186,13 @@ public class ScheduleJobController{
 			service.restartJob(scheduleEntity.getJob_name(), scheduleEntity.getJob_group());
 			return new BaseReturn("恢复成功").toJSONString();
 		} catch (Exception e) {
-			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, "操作失败!").toJSONString();
+			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, e.getMessage()).toJSONString();
 		}
 	}
 
 	/**
 	* @desctiption 获取所有trigger触发器
-	* @author 陈急舟
+	* @author 陈急舟 
 	* @date 2019/9/25 14:38
 	*/
 	@PostMapping(value = "getTriggers")
@@ -202,7 +206,7 @@ public class ScheduleJobController{
 			page.setList(list);
 			return new BaseReturn("操作成功", page).toJSONString();
 		} catch (Exception e) {
-			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, "操作失败!").toJSONString();
+			return new BaseReturn(BaseReturnCode.PROCESS_ERROR, e.getMessage()).toJSONString();
 		}
 
 	}
